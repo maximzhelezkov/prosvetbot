@@ -4,13 +4,6 @@ START_MESSAGE = """
 """
 
 MENUB1_MESSAGE = """
-о студии
-"""
-
-MENUB4_MESSAGE = """
-"""
-
-MENUB5_MESSAGE = """
 Как нас найти.
 Москва, улица Правды, 24с3
 
@@ -21,6 +14,18 @@ MENUB5_MESSAGE = """
 VK: <a href='https://vk.com/id871588700'>ID:871588700</a>
 
 Задать вопрос: @ProSvetAdmin
+"""
+
+MENUB4_MESSAGE = """
+Что хотите арендовать?
+"""
+
+MENUB41_MESSAGE = """
+Когда хотите арендовать?
+"""
+
+MENUB42_MESSAGE = """
+Во сколько хотите аредовать
 """
 
 MENU_MESSAGE = """Это меню, """

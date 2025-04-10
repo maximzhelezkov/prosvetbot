@@ -9,7 +9,7 @@ import asyncio
 
 
 @dp.message_handler(commands=['start'])
-async def start_command(message: types.Message):
+async def start_handler(message: types.Message):
     await bot.send_message(chat_id=message.chat.id, text=START_MESSAGE, reply_markup=menuikb)
 
     nonetype = "None"
@@ -18,6 +18,7 @@ async def start_command(message: types.Message):
     db(user_id, username)
     
 
-milky_id = 1984752299
+milky_id = 1984752299 
+
 
 
