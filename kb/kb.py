@@ -14,6 +14,9 @@ menuikb.add(menub1, menub5).add(menub2, menub3).add(menub4)
 
 back1 = InlineKeyboardButton("Назад ◀️", callback_data='back1')
 
+menuikb1 = InlineKeyboardMarkup(row_width=1)
+menuikb1.add(back1)
+
 menub5ikb = InlineKeyboardMarkup(row_width=2)
 menub5b = InlineKeyboardButton("Геолокация", callback_data='menub51')
 menub5ikb.add(menub5b).add(back1)
