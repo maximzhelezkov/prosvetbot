@@ -38,198 +38,23 @@ def db(user_id, username):
     conn.close()
 
 
+#table names
+# hmi
+# led
+# tungsten
+# kino_flo
+# soft
+# chimera
+# stands_high
+# power_distributors_and_cables
+# lightning control
+# grip
+# tubes_trusses
+# fog_hazer    
+# other
+# carts
+# car_mount
 
-categories = [
-    'HMI',
-    'LED',
-    'TUNGSTEN',
-    'KINO FLO',
-    'SOFT',
-    'CHIMERA',
-    'STANDS HIGH ROLLER C-STAND',
-    'POWER DISTRIBUTORS AND CABLES',
-    'LIGHTING CONTROL',
-    'GRIP',
-    'TUBES TRUSSES',
-    'FOG HAZER',
-    'OTHER',
-    'CARTS',
-    'Car Mount'
-]
-
-
-
-conn = sqlite3.connect('prosvet.db')
-cur = conn.cursor()
-
-cur.execute('''
-        CREATE TABLE IF NOT EXISTS hmi (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            name TEXT,
-            availability INTEGER,
-            amount INTGER, 
-            price INTEGER 
-        )
-    ''')
-
-cur.execute('''
-        CREATE TABLE IF NOT EXISTS led (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            name TEXT,
-            availability INTEGER,
-            amount INTGER, 
-            price INTEGER 
-            
-        )
-    ''')
-
-cur.execute('''
-        CREATE TABLE IF NOT EXISTS tungsten (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            name TEXT,
-            availability INTEGER,
-            amount INTGER, 
-            price INTEGER 
-            
-        )
-    ''')
-
-cur.execute('''
-        CREATE TABLE IF NOT EXISTS tungsten (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            name TEXT,
-            availability INTEGER,
-            amount INTEGER,
-            price INTEGER
-            
-        )
-    ''')
-
-cur.execute('''
-        CREATE TABLE IF NOT EXISTS kino_flo (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            name TEXT,
-            availability INTEGER,
-            amount INTEGER,
-            price INTEGER
-            
-        )
-    ''')
-
-cur.execute('''
-        CREATE TABLE IF NOT EXISTS soft (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            name TEXT,
-            availability INTEGER,
-            amount INTEGER,
-            price INTEGER 
-            
-        )
-    ''')
-
-cur.execute('''
-        CREATE TABLE IF NOT EXISTS chimera (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            name TEXT,
-            availability INTEGER,
-            amount INTEGER,
-            price INTEGER
-            
-        )
-    ''')
-
-cur.execute('''
-        CREATE TABLE IF NOT EXISTS stands_high (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            name TEXT,
-            availability INTEGER,
-            amount INTEGER, 
-            price INTEGER
-        )
-    ''')
-
-cur.execute('''
-        CREATE TABLE IF NOT EXISTS power_distributors_and_cables (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            name TEXT,
-            availability INTEGER,
-            amount INTEGER, 
-            price INTEGER
-        )
-    ''')
-
-cur.execute('''
-        CREATE TABLE IF NOT EXISTS lighting_control (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            name TEXT,
-            availability INTEGER,
-            amount INTEGER, 
-            price INTEGER
-        )
-    ''')
-
-cur.execute('''
-        CREATE TABLE IF NOT EXISTS grip (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            name TEXT,
-            availability INTEGER,
-            amount INTEGER, 
-            price INTEGER
-        )
-    ''')
-
-cur.execute('''
-        CREATE TABLE IF NOT EXISTS tubes_trusses (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            name TEXT,
-            availability INTEGER,
-            amount INTEGER, 
-            price INTEGER
-        )
-    ''')
-
-cur.execute('''
-        CREATE TABLE IF NOT EXISTS fog_hazer (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            name TEXT,
-            availability INTEGER,
-            amount INTEGER, 
-            price INTEGER
-        )
-    ''')
-
-cur.execute('''
-        CREATE TABLE IF NOT EXISTS other (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            name TEXT,
-            availability INTEGER,
-            amount INTEGER, 
-            price INTEGER
-        )
-    ''')
-
-cur.execute('''
-        CREATE TABLE IF NOT EXISTS carts (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            name TEXT,
-            availability INTEGER,
-            amount INTEGER, 
-            price INTEGER
-        )
-    ''')
-
-cur.execute('''
-        CREATE TABLE IF NOT EXISTS car_mount (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            name TEXT,
-            availability INTEGER,
-            amount INTEGER, 
-            price INTEGER
-        )
-    ''')
-
-conn.commit()
-conn.close()
 
 
 # conn = sqlite3.connect('prosvet.db')

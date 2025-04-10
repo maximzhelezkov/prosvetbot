@@ -7,7 +7,7 @@ menub1 = InlineKeyboardButton("О нас \ Адрес", callback_data='menub1')
 menub2 = InlineKeyboardButton("Наш сайт", url='https://pravdaprosvet.ru')
 menub3 = InlineKeyboardButton("Наш телеграм канал", url='prosvetcorp.t.me')
 menub4 = InlineKeyboardButton("Быстрая бронь", callback_data='menub4')
-menuikb.add(menub1).add(menub2, menub3).add(menub4)
+menuikb.add(menub2, menub3).add(menub1).add(menub4)
 
 back1 = InlineKeyboardButton("Назад ⬅️", callback_data='back1')
 
@@ -22,6 +22,7 @@ menuikb4 = InlineKeyboardMarkup(row_width=3)
 menu4b1 = InlineKeyboardButton("Студия", callback_data='studio')
 menu4b2 = InlineKeyboardButton("Оборудование", callback_data='equipment')
 menuikb4.add(menu4b1).add(menu4b2).add(back1)
+
 
 current_month = datetime.datetime.now().month
 
@@ -106,3 +107,18 @@ timeikb = InlineKeyboardMarkup(row_width=2)
 timeb1 = InlineKeyboardButton("Изменить⬅️", callback_data='studio')
 timeb2 = InlineKeyboardButton("Продолжить➡️", callback_data='forward')
 timeikb.add(timeb1).add(timeb2)
+
+callback_data_map = {
+    'stb1': (MENUB41_MESSAGE, studioikb21),
+    'stb2': (MENUB41_MESSAGE, studioikb22),
+    'stb3': (MENUB41_MESSAGE, studioikb23),
+    'stb4': (MENUB41_MESSAGE, studioikb24),
+    'stb5': (MENUB41_MESSAGE, studioikb25),
+    'stb6': (MENUB41_MESSAGE, studioikb26),
+    'stb7': (MENUB41_MESSAGE, studioikb27),
+    'stb8': (MENUB41_MESSAGE, studioikb28),
+    'stb9': (MENUB41_MESSAGE, studioikb29),
+    'stb10': (MENUB41_MESSAGE, studioikb210),
+    'stb11': (MENUB41_MESSAGE, studioikb211),
+    'stb12': (MENUB41_MESSAGE, studioikb212)
+}
