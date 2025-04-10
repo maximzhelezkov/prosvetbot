@@ -4,6 +4,9 @@ from db.dbcon import db
 from data.txt import START_MESSAGE
 
 
+
+
+
 @dp.message_handler(commands=['start'])
 async def start_handler(message: types.Message):
     await bot.send_message(
@@ -25,4 +28,3 @@ async def source_command(message):
         chat_id=message.chat.id, 
         text=f"""Код доступен здесь https://github.com/maximzhelezkov/prosvetbot \nРазработка бота: <a href="kiddie113.t.me">Максим</a>
 """)
-
