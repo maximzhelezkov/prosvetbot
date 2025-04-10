@@ -1,2 +1,3 @@
 config.py
-prosvet.db
+data/config.py
+.db
