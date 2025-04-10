@@ -1,7 +1,13 @@
 from boot import bot, dp, types
+from aiogram.dispatcher import FSMContext
+from aiogram.contrib.middlewares.logging import LoggingMiddleware
+from aiogram.dispatcher.filters.state import State, StatesGroup
+from db.dbcon import db_add_info
+from aiogram.types import ReplyKeyboardRemove
 from aiogram.types import CallbackQuery, InlineKeyboardButton, InlineKeyboardMarkup
 from data.txt import START_MESSAGE,MENUB1_MESSAGE, MENUB4_MESSAGE, MENUB41_MESSAGE
-from kb.kb import timeikb, menuikb, menuikb1, menuikb4, studioikb1, callback_data_map
+from kb.kb import timeikb, menuikb, menuikb1, menuikb4, studioikb1, callback_data_map, forwardikb
+from boot import storage
 
 @dp.callback_query_handler(lambda cb: cb.data == 'menub1')
 async def callback_menub1(call: CallbackQuery):     
@@ -15,7 +21,10 @@ async def callback_menub1(call: CallbackQuery):
 @dp.callback_query_handler(lambda cb: cb.data == 'back1')
 async def callback_back(call: CallbackQuery):
     await bot.answer_callback_query(call.id)
-    await bot.edit_message_text(chat_id=call.message.chat.id,message_id=call.message.message_id, text=START_MESSAGE, reply_markup=menuikb)
+    await bot.edit_message_text(chat_id=call.message.chat.id,
+                                message_id=call.message.message_id, 
+                                text=START_MESSAGE, 
+                                reply_markup=menuikb)
 
 @dp.callback_query_handler(lambda cb: cb.data == 'menub11')
 async def callback_menub11(call: CallbackQuery):     
@@ -108,12 +117,9 @@ async def time2(call: CallbackQuery):
         await bot.edit_message_text(
             chat_id=call.message.chat.id,
             message_id=call.message.message_id,
-            text=f"""✅ Вы выбрали:\nДата: {date} апреля\nВремя: с {start}:00 до {end}:00\nПримерная цена: {price} руб.\nИтоговая цена может отличатся, <a href='https://pravdaprosvet.ru/rooles'>почитать правила можно тут</a>""",
+            text=f"""✅ Вы выбрали:\nДата: {date}.04\nВремя: с {start}:00 до {end}:00\nПримерная цена: {price} руб.\nИтоговая цена может отличатся, <a href='https://pravdaprosvet.ru/rooles'>почитать правила можно тут</a>""",
             reply_markup=timeikb, 
             disable_web_page_preview=True)
-
-        user_selected_times.pop(user_id, None)
-        user_selected_date.pop(user_id, None)
 
 @dp.callback_query_handler(lambda cb: cb.data in callback_data_map)
 async def callback_stb(call: CallbackQuery):
@@ -125,3 +131,43 @@ async def callback_stb(call: CallbackQuery):
                                 reply_markup=markup)
     
 
+class Form(StatesGroup):
+    waiting_for_name = State()
+    waiting_for_phone = State()
+
+@dp.callback_query_handler(lambda cb: cb.data == 'forward')
+async def callback_forward(call: CallbackQuery):
+    await bot.answer_callback_query(call.id)
+    await bot.edit_message_text(chat_id=call.message.chat.id, 
+                                message_id=call.message.message_id, 
+                                text="Теперь нам нужны контактные данные\nПожалуйста, введите ваше имя:", 
+                                reply_markup=forwardikb)
+
+    await Form.waiting_for_name.set()
+
+@dp.message_handler(state=Form.waiting_for_name)
+async def get_name(message: types.Message, state: FSMContext):
+    async with state.proxy() as data:
+        data['name'] = message.text
+
+    await Form.waiting_for_phone.set()
+    await message.answer("Введите ваш номер телефона:")
+
+@dp.message_handler(state=Form.waiting_for_phone)
+async def get_phone(message: types.Message, state: FSMContext):
+    async with state.proxy() as data:
+        data['phone'] = message.text 
+        selected_date = user_selected_date.get(message.from_user.id, 'не выбрана')
+        selected_times = user_selected_times.get(message.from_user.id, [])
+        time_str = "с " + ":00 до ".join([str(hour) for hour in selected_times]) + ":00" if selected_times else "не выбрано"
+
+    user_id = message.from_user.id
+    name = data['name']
+    phone = data['phone']
+
+    db_add_info(name, phone, selected_date, time_str, user_id)
+
+    await message.answer(f"Спасибо! Ваши данные сохранены.\nИмя: {name}\nТелефон: {phone}\nДата: {selected_date}\nВремя: {time_str}.\nМы с вами свяжемся", reply_markup=ReplyKeyboardRemove())
+    await state.finish()
+    user_selected_times.pop(user_id, None)
+    user_selected_date.pop(user_id, None)

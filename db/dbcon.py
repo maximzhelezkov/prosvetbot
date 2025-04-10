@@ -7,12 +7,21 @@ cur.execute('''
         CREATE TABLE IF NOT EXISTS users (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             user_id INTEGER UNIQUE,
-            username TEXT
+            username TEXT,
+            name TEXT,
+            phone INT, 
+            selected_date STR,
+            month STR,
+            time_str STR
+
         )
     ''')
-
 conn.commit()
 conn.close()
+
+
+
+
 
 def user_exists(user_id):
     conn = sqlite3.connect('prosvet.db')
@@ -36,6 +45,28 @@ def db(user_id, username):
 
     conn.commit()
     conn.close()
+
+def db_add_info(name, phone, selected_date, time_str, user_id):
+    # Используем контекстный менеджер для автоматического закрытия соединения
+    with sqlite3.connect('prosvet.db') as conn:
+        cur = conn.cursor()
+        
+        # Проверим, существует ли уже пользователь
+        cur.execute('SELECT user_id FROM users WHERE user_id = ?', (user_id,))
+        user = cur.fetchone()
+        
+        if user:
+            # Если пользователь существует, обновим данные
+            cur.execute('UPDATE users SET name = ?, phone = ?, selected_date = ?, time_str = ? WHERE user_id = ?',
+                        (name, phone, selected_date, time_str, user_id))
+        else:
+            # Если пользователя нет, вставим новые данные
+            cur.execute('INSERT INTO users (user_id, username, name, phone, selected_date, time_str) VALUES (?, ?, ?, ?, ?, ?)',
+                        (user_id, name, name, phone, selected_date, time_str))
+        
+        # Фиксируем изменения
+        conn.commit()
+        
 
 
 #table names

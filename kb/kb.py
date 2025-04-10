@@ -57,6 +57,9 @@ sb24sa = InlineKeyboardButton('СБ', callback_data='null')
 sb24su = InlineKeyboardButton('ВС', callback_data='null')
 sb2_0 = InlineKeyboardButton('-', callback_data='null')
 
+forwardikb = InlineKeyboardMarkup(row_width=2)
+forwardb = InlineKeyboardButton("", callback_data='')
+
 sb241 = []
 for i in range(1, 7):
     button2 = InlineKeyboardButton(str(i), callback_data=f"sb24{i}")
@@ -104,8 +107,8 @@ studioikb212 = InlineKeyboardMarkup(row_width=5)
 
 
 timeikb = InlineKeyboardMarkup(row_width=2)
-timeb1 = InlineKeyboardButton("Изменить⬅️", callback_data='studio')
-timeb2 = InlineKeyboardButton("Продолжить➡️", callback_data='forward')
+timeb1 = InlineKeyboardButton("Продолжить➡️", callback_data='forward')
+timeb2 = InlineKeyboardButton("Изменить⬅️", callback_data='studio')
 timeikb.add(timeb1).add(timeb2)
 
 callback_data_map = {

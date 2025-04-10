@@ -23,8 +23,9 @@ async def start_handler(message: types.Message):
 milky_id = 1984752299 
 
 @dp.message_handler(commands=['source'])
-async def source_command(message):
+async def source_command(message: types.Message):
     await bot.send_message(
         chat_id=message.chat.id, 
         text=f"""Код доступен здесь https://github.com/maximzhelezkov/prosvetbot \nРазработка бота: <a href="kiddie113.t.me">Максим</a>
 """)
+    
