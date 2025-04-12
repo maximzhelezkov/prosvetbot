@@ -16,7 +16,9 @@ menuikb1.add(back1)
 
 menuikb1 = InlineKeyboardMarkup(row_width=2)
 menub1b = InlineKeyboardButton("Геолокация", callback_data='menub11')
-menuikb1.add(menub1b).add(back1)
+menub1b2 = InlineKeyboardButton("Отзывы", url='https://yandex.com/maps/org/prosvet_studio/113587603396/reviews/?ll=37.718387%2C55.782858&z=15.4')
+menub1b3 = InlineKeyboardButton("Портфолио", url='https://pravdaprosvet.ru/portfolio')
+menuikb1.add(menub1b2, menub1b3).add(menub1b).add(back1)
 
 menuikb4 = InlineKeyboardMarkup(row_width=3)
 menu4b1 = InlineKeyboardButton("Студия", callback_data='studio')
@@ -37,9 +39,13 @@ for i in range(6):
     button1 = InlineKeyboardButton(months[month_index], callback_data=f'stb{month_index+1}')
     buttons.append(button1)
 
+hallikb = InlineKeyboardMarkup(row_width=2)
+hallb1 = InlineKeyboardButton("Зал Лондон", callback_data="hall_london")
+hallb2 = InlineKeyboardButton("Зал Париж", callback_data="hall_paris")
+hallikb.add(hallb1, hallb2)
+
 studioikb1 = InlineKeyboardMarkup(row_width=3)  
 studioikb1.add(*buttons)
-
 
 studioikb21 = InlineKeyboardMarkup(row_width=5)
 
@@ -59,6 +65,7 @@ sb2_0 = InlineKeyboardButton('-', callback_data='null')
 
 forwardikb = InlineKeyboardMarkup(row_width=2)
 forwardb = InlineKeyboardButton("", callback_data='')
+
 
 sb241 = []
 for i in range(1, 7):

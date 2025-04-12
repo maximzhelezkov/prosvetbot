@@ -9,9 +9,10 @@ cur.execute('''
             user_id INTEGER UNIQUE,
             username TEXT,
             name TEXT,
-            phone INT, 
+            phone STR, 
             selected_date STR,
             month STR,
+            hall STR,
             time_str STR
 
         )
@@ -46,25 +47,21 @@ def db(user_id, username):
     conn.commit()
     conn.close()
 
-def db_add_info(name, phone, selected_date, time_str, user_id):
-    # Используем контекстный менеджер для автоматического закрытия соединения
+
+def db_add_info(name, phone, selected_date, time_str, month, hall, user_id):
     with sqlite3.connect('prosvet.db') as conn:
         cur = conn.cursor()
-        
-        # Проверим, существует ли уже пользователь
+
         cur.execute('SELECT user_id FROM users WHERE user_id = ?', (user_id,))
         user = cur.fetchone()
         
         if user:
-            # Если пользователь существует, обновим данные
-            cur.execute('UPDATE users SET name = ?, phone = ?, selected_date = ?, time_str = ? WHERE user_id = ?',
-                        (name, phone, selected_date, time_str, user_id))
+            cur.execute('UPDATE users SET name = ?, phone = ?, selected_date = ?, time_str = ?, month = ?, hall = ? WHERE user_id = ?',
+                        (name, phone, selected_date, time_str, month, hall, user_id))
         else:
-            # Если пользователя нет, вставим новые данные
-            cur.execute('INSERT INTO users (user_id, username, name, phone, selected_date, time_str) VALUES (?, ?, ?, ?, ?, ?)',
-                        (user_id, name, name, phone, selected_date, time_str))
+            cur.execute('INSERT INTO users (user_id, name, phone, selected_date, month, time_str, hall) VALUES (?, ?, ?, ?, ?, ?, ?)',
+                        (user_id, name, phone, selected_date, month, hall, time_str))
         
-        # Фиксируем изменения
         conn.commit()
         
 
