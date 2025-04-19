@@ -3,11 +3,11 @@ import sqlite3
 # conn = sqlite3.connect('prosvet.db')
 # cur = conn.cursor()
 
-# cur.execute('''DROP TABLE users''')
-# conn.commit()
-# conn.close()
+# # cur.execute('''DROP TABLE users''')
+# # conn.commit()
+# # conn.close()
 
-
+# '
 
 conn = sqlite3.connect('prosvet.db')
 cur = conn.cursor()

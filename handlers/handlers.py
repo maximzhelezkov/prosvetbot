@@ -1,7 +1,7 @@
 from boot import bot, dp, types
 from kb.kb import menuikb, adminikb, startikb
 from db.dbcon import db
-from data.txt import START_MESSAGE
+from data.txt import START_MESSAGE, START_MESSAGE2
 import data.config
 from data.txt import ADMIN_PANEL_MESSAGE
 
@@ -10,9 +10,12 @@ async def start_handler(message: types.Message):
     if len(message.get_args()) > 0 and message.get_args() == "new":
         await bot.send_message(
             chat_id=message.chat.id, 
-            text="Приветственное сообщение", 
+            text="", 
             reply_markup=startikb)
     else:
+        await bot.send_message(
+        chat_id=message.chat.id, 
+        text=START_MESSAGE2) 
         await bot.send_message(
             chat_id=message.chat.id, 
             text=START_MESSAGE, 

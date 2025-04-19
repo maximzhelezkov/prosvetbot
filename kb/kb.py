@@ -38,9 +38,9 @@ menuikb = InlineKeyboardMarkup(row_width=2)
 menub1 = InlineKeyboardButton("Бронирование", callback_data='menub1')
 menub3 = InlineKeyboardButton("Оформить пропуск", callback_data='menub33')
 menub5 = InlineKeyboardButton("Мероприятия", callback_data='menub5')
-menub4 = InlineKeyboardButton("О студии", callback_data='menub4')
-menub2 = InlineKeyboardButton("Контакты", callback_data='menub2')
-menuikb.add(menub1).add(menub3).add(menub5).add(menub4, menub2)
+menub7 = InlineKeyboardButton("О студии", callback_data='menub7')
+menub6 = InlineKeyboardButton("Контакты", callback_data='menub6')
+menuikb.add(menub1).add(menub3).add(menub5).add(menub7, menub6)
 
 
 #-=Цепочка menub1=-
@@ -265,8 +265,7 @@ studioikb212.add(sb24m, sb24tu, sb24w, sb24te, sb24f, sb24sa, sb24su).add(*sb212
 
 timeikb = InlineKeyboardMarkup(row_width=2)
 timeb1 = InlineKeyboardButton("Продолжить➡️", callback_data='forward')
-timeb2 = InlineKeyboardButton("Изменить⬅️", callback_data='studio')
-timeikb.add(timeb1).add(timeb2)
+timeikb.add(timeb1).add(back3)
 
 callback_data_map = {
     'stb1': (MENUB41_MESSAGE, studioikb21),
@@ -315,9 +314,8 @@ menuikb2p4 = InlineKeyboardMarkup(row_width=1)
 menuikb2p4.add(back7)
 
 #-=Цепочка menub5=-
-menuikb1p5 = InlineKeyboardMarkup(row_width=1)
-
-
+menuikb5 = InlineKeyboardMarkup(row_width=1)
+menuikb5.add(back1)
 #-=Кнопки Админ Панели=-
 
 adminikb = InlineKeyboardMarkup(row_width=2)
