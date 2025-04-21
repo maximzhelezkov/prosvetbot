@@ -1,4 +1,6 @@
 import sqlite3
+from datetime import datetime
+
 
 # conn = sqlite3.connect('prosvet.db')
 # cur = conn.cursor()
@@ -26,7 +28,105 @@ cur.execute('''
 conn.commit()
 conn.close()
 
+def get_all_user_id():
+    conn = sqlite3.connect("prosvet.db")
+    cursor = conn.cursor()
+    cursor.execute("SELECT user_id FROM users")
+    user_ids = cursor.fetchall()
+    conn.close()
 
+    return user_ids
+
+def get_all_time_str():
+    conn = sqlite3.connect("prosvet.db")
+    cursor = conn.cursor()
+    cursor.execute("SELECT time_str FROM users")
+    rows = cursor.fetchall()
+    conn.close()
+
+    booked_times = []
+
+    for row in rows:
+        if row[0]:
+            time_blocks = row[0].strip().split('\n') 
+            for block in time_blocks:
+                block = block.strip()
+                if "с" in block and "до" in block:
+                        date_part = block.split("с")[0].strip()
+                        date_time_parts = block.split("с")[1].split("до")
+                        if len(date_time_parts) == 2:
+                            start_time = date_time_parts[0].strip()
+                            end_time = date_time_parts[1].strip()
+                            booked_times.append((date_part, start_time, end_time))
+    print(booked_times)
+    return booked_times
+
+
+def is_time_booked(day: int, month: int, time: str) -> bool:
+    conn = sqlite3.connect('prosvet.db')
+    cur = conn.cursor()
+    cur.execute("SELECT time_str FROM users")
+    all_times = cur.fetchall()
+    conn.close()
+
+    target_date = f"{str(day).zfill(2)}.{str(month).zfill(2)}"
+
+    # Обработка нестандартного времени 24:00
+    if time.strip() == "24:00":
+        time = "23:59"
+
+    try:
+        target_time = datetime.strptime(time.strip(), "%H:%M").time()
+    except ValueError:
+        print(f"⛔ Неверный формат времени: {time}")
+        return False
+
+    for (time_str,) in all_times:
+        if not time_str:
+            continue
+
+        blocks = time_str.strip().split('\n')
+        for block in blocks:
+            if "с" in block and "до" in block:
+                try:
+                    date_part = block.split("с")[0].strip()
+                    time_range = block.split("с")[1].strip()
+                    start_time_str, end_time_str = time_range.split("до")
+
+                    # Заменяем 24:00 на 23:59
+                    if start_time_str.strip() == "24:00":
+                        start_time_str = "23:59"
+                    if end_time_str.strip() == "24:00":
+                        end_time_str = "23:59"
+
+                    start_time = datetime.strptime(start_time_str.strip(), "%H:%M").time()
+                    end_time = datetime.strptime(end_time_str.strip(), "%H:%M").time()
+
+                    if date_part == target_date:
+                        if start_time <= target_time <= end_time:
+                            return True
+                except Exception as e:
+                    print(f"Ошибка в блоке '{block}': {e}")
+                    continue
+
+    return False
+
+def db_delete_booking(booking_id: int):
+    conn = sqlite3.connect('prosvet.db')
+    cursor = conn.cursor()
+    cursor.execute("DELETE FROM users WHERE id = ?", (booking_id,))
+    conn.commit()
+    conn.close()
+
+def db_add_booking(name: str, phone: str, selected_date: str, time_str: str):
+    conn = sqlite3.connect('prosvet.db')
+    cur = conn.cursor()
+    cur.execute('''
+        INSERT OR REPLACE INTO users (name, phone, selected_date, time_str)
+        VALUES (?, ?, ?, ?)
+    ''', (name, phone, selected_date, time_str))
+    conn.commit()
+    conn.close()
 
 
 

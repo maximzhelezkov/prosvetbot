@@ -1,9 +1,11 @@
 from boot import bot, dp, types
+import sqlite3
 from kb.kb import menuikb, adminikb, startikb
 from db.dbcon import db
 from data.txt import START_MESSAGE, START_MESSAGE2
 import data.config
 from data.txt import ADMIN_PANEL_MESSAGE
+
 
 @dp.message_handler(commands=['start'])
 async def start_handler(message: types.Message):
@@ -24,7 +26,9 @@ async def start_handler(message: types.Message):
     user_id = message.from_user.id
     username = (message.from_user.username or nonetype)
     db(user_id, username)
-    
+
+
+
 
 milky_id = 1984752299 
 
